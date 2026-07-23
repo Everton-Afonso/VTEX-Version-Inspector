@@ -1,0 +1,21 @@
+#orderform {
+  margin-bottom: 20px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+.orderform-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.orderform-label {
+  font-weight: bold;
+}
+
+.orderform-value {
+  color: #0b6bcb;
+}

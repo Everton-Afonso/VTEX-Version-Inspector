@@ -45,15 +45,28 @@ function getComponents() {
     return apps;
 }
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.type === "GET_COMPONENTS") {
+//busca o orderform
 
-        const result = getComponents();
+async function getOrderForm() {
+    try {
+        const response = await fetch("/api/checkout/pub/orderForm", {
+            credentials: "include",
+        });
 
-        console.log("📦 Enviando componentes:", result);
-
-        sendResponse(result);
+        if (!response.ok) return null;
+        
+        return await response.json();
+    } catch {
+        return null;
     }
+}
 
-    return true;
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    switch (message.type) {
+        case "GET_COMPONENTS": sendResponse(getComponents());
+            return true;
+
+        case "GET_ORDERFORM": getOrderForm().then(sendResponse).catch(() => sendResponse(null));
+            return true;
+    }
 });
